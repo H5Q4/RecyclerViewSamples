@@ -343,7 +343,7 @@ public class ItemAdapter<T extends ItemHolder> extends RecyclerView.Adapter<Item
     @SuppressWarnings("unchecked")
     public void onBindViewHolder(ItemViewHolder holder, int position) {
         // suppress any unchecked warnings since it is up to the subclass to guarantee
-        // compatibility of their view holders with the item holder corresponding
+        // compatibility of their view holders with the item holder corresponding position
         if (isPositionForHeader(position)) {
             holder.bindItemView(mHeaderHolders.get(position));
         } else if (isPositionForFooter(position)) {
