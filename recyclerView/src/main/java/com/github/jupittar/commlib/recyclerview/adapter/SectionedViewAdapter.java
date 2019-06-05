@@ -2,6 +2,7 @@ package com.github.jupittar.commlib.recyclerview.adapter;
 
 import android.content.Context;
 import android.support.annotation.LayoutRes;
+import android.support.annotation.NonNull;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,8 +21,8 @@ public abstract class SectionedViewAdapter<T extends SectionedItem> extends Comm
         this.mSectionLayoutId = sectionLayoutId;
     }
 
-    @Override
-    public BaseViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    @NonNull @Override
+    public BaseViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         if (viewType == ITEM_TYPE_SECTION) {
             View view = LayoutInflater.from(parent.getContext()).inflate(mSectionLayoutId, parent, false);
             return new BaseViewHolder(view);

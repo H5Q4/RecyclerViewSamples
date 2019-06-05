@@ -33,7 +33,7 @@ public abstract class CommonViewAdapter<T> extends BaseViewAdapter<T> {
     }
 
     @Override
-    public void onBindViewHolder(BaseViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull BaseViewHolder holder, int position) {
         if (holder.getItemViewType() != ITEM_TYPE_HEADER
                 && holder.getItemViewType() != ITEM_TYPE_FOOTER) {
             if (mHeaderView != null) {
@@ -44,8 +44,8 @@ public abstract class CommonViewAdapter<T> extends BaseViewAdapter<T> {
         }
     }
 
-    @Override
-    public BaseViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    @NonNull @Override
+    public BaseViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         BaseViewHolder holder;
         if (mHeaderView != null && viewType == ITEM_TYPE_HEADER) {
             holder = new BaseViewHolder(mHeaderView);

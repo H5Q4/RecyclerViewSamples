@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import com.github.jupittar.commlib.recyclerview.listener.OnItemChangedListener;
 import com.github.jupittar.commlib.recyclerview.listener.OnItemClickedListener;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -35,6 +36,15 @@ public class ItemAdapter<T extends ItemHolder> extends RecyclerView.Adapter<Item
      * List of {@link ItemHolder} for the footers this adapter represented
      */
     private List<ItemHolder> mFooterHolders;
+
+    public List<ItemHolder> getHeaderHolders() {
+        return mHeaderHolders == null ? new ArrayList<ItemHolder>() : mHeaderHolders;
+    }
+
+    public List<ItemHolder> getFooterHolders() {
+        return mFooterHolders == null ? new ArrayList<ItemHolder>() : mFooterHolders;
+    }
+
 
     /**
      * Invoked when any item changed
@@ -140,14 +150,14 @@ public class ItemAdapter<T extends ItemHolder> extends RecyclerView.Adapter<Item
      * @return the count of the headers this adapter represented
      */
     private int getHeaderCount() {
-        return mHeaderHolders == null ? 0 : mHeaderHolders.size();
+        return getHeaderHolders().size();
     }
 
     /**
      * @return the count of the footers this adapter represented
      */
     private int getFooterCount() {
-        return mFooterHolders == null ? 0 : mFooterHolders.size();
+        return getFooterHolders().size();
     }
 
     /**
@@ -180,7 +190,7 @@ public class ItemAdapter<T extends ItemHolder> extends RecyclerView.Adapter<Item
     public ItemAdapter addHeader(ItemHolder... header) {
         for (ItemHolder itemHolder :
                 header) {
-            mHeaderHolders.add(itemHolder);
+            getHeaderHolders().add(itemHolder);
             notifyItemInserted(getHeaderCount() - 1);
         }
         return this;
@@ -195,7 +205,7 @@ public class ItemAdapter<T extends ItemHolder> extends RecyclerView.Adapter<Item
     public ItemAdapter addFooter(ItemHolder... footer) {
         for (ItemHolder itemHolder :
                 footer) {
-            mHeaderHolders.add(itemHolder);
+            getFooterHolders().add(itemHolder);
             notifyItemInserted(getFooterCount() - 1);
         }
         return this;
@@ -330,8 +340,8 @@ public class ItemAdapter<T extends ItemHolder> extends RecyclerView.Adapter<Item
         return null;
     }
 
-    @Override
-    public ItemViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    @NonNull @Override
+    public ItemViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         final ItemViewHolder.Factory factory = mFactoriesByViewType.get(viewType);
         if (factory != null) {
             return factory.createViewHolder(parent, viewType);
@@ -341,7 +351,7 @@ public class ItemAdapter<T extends ItemHolder> extends RecyclerView.Adapter<Item
 
     @Override
     @SuppressWarnings("unchecked")
-    public void onBindViewHolder(ItemViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull ItemViewHolder holder, int position) {
         // suppress any unchecked warnings since it is up to the subclass to guarantee
         // compatibility of their view holders with the item holder corresponding position
         if (isPositionForHeader(position)) {
@@ -357,10 +367,10 @@ public class ItemAdapter<T extends ItemHolder> extends RecyclerView.Adapter<Item
     @Override
     public int getItemViewType(int position) {
         if (isPositionForHeader(position)) {
-            return mHeaderHolders.get(position).getItemViewType();
+            return getHeaderHolders().get(position).getItemViewType();
         }
         if (isPositionForFooter(position)) {
-            return mFooterHolders.get(position).getItemViewType();
+            return getFooterHolders().get(position).getItemViewType();
         }
         return mItemHolders.get(position).getItemViewType();
     }
@@ -375,7 +385,7 @@ public class ItemAdapter<T extends ItemHolder> extends RecyclerView.Adapter<Item
     }
 
     @Override
-    public void onViewRecycled(ItemViewHolder holder) {
+    public void onViewRecycled(@NonNull ItemViewHolder holder) {
         holder.setOnItemClickedListener(null);
         holder.recycleItemView();
     }

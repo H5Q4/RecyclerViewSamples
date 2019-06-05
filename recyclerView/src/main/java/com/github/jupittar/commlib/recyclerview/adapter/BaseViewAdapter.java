@@ -2,6 +2,7 @@ package com.github.jupittar.commlib.recyclerview.adapter;
 
 import android.content.Context;
 import android.support.annotation.LayoutRes;
+import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -29,8 +30,8 @@ public abstract class BaseViewAdapter<T> extends RecyclerView.Adapter<BaseViewHo
         mOnItemClickListener = onItemClickListener;
     }
 
-    @Override
-    public BaseViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    @Override @NonNull
+    public BaseViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(mContext).inflate(mLayoutId, parent, false);
         final BaseViewHolder holder = new BaseViewHolder(view);
         if (mOnItemClickListener != null) {
@@ -45,7 +46,7 @@ public abstract class BaseViewAdapter<T> extends RecyclerView.Adapter<BaseViewHo
     }
 
     @Override
-    public void onBindViewHolder(BaseViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull BaseViewHolder holder, int position) {
         T item = getItem(position);
         convertView(holder, item);
     }
